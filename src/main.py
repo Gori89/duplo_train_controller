@@ -1,37 +1,31 @@
 import asyncio
 import device_ble
-import uuid
 import constants
-
-UUID= uuid.UUID('00001624-1212-efde-1623-785feabcd123')
-
-##PREP_COMMAND= bytearray([0x0A, 0x00, 0x41, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x01])
-##START_COMMAND= bytearray([0x08, 0x00, 0x81, 0x00, 0x01, 0x51, 0x00, 0x9C])
 
 async def main():
     device = device_ble.DeviceBle()
     try: 
         await device.connect()
 
-        while True:
+        while x != "OUT":
             print('Enter comand (speed int, sound or color):')
             x = input()
-            await device.prep(UUID)
+            await device.prep()
             await asyncio.sleep(1)
             if x.isdigit():
                 print("speed:",x)
-                await device.run(UUID,x)
+                await device.send_command("SPEED", x)
             else:
                 x=x.upper()
                 if  x in constants.SOUND.keys():
                     print("sound:",x)
-                    await device.sound(UUID, x)
+                    await device.send_command("SOUND", x)
                 elif  x in constants.COLOR.keys():
                     print("color:",x)
-                    await device.light(UUID,x)
+                    await device.send_command("LIGHT",x)
+                elif x=="OUT":
+                    device.disconnect()
                 else: print("Invalid input")
-
-        await device.disconnect()
     except Exception as e:
         print(e)
     
