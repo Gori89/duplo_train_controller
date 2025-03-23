@@ -1,6 +1,8 @@
 # duplo_train_controller
  
  🚧PROJECT UNDER CONTRUCTION🚧
+ 
+ <span style="color:red">**STATUS: POC to learn lego bluetooth protocol for Duplo train**</span>
 
 The final goal of this proyect is to create a physical dashboard for the Lego Duplo Steam Train (Train 10874)
 
