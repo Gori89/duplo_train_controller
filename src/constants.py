@@ -1,5 +1,3 @@
-from enum import Enum, StrEnum
-
 MODEL_NAME= "Train Base"
 
 MANUFACTOR_ID = 32
@@ -7,14 +5,17 @@ MANUFACTOR_ID = 32
 MAX_SPEED = 100
 MIN_SPEED = -100
 
-UUID = '00001624-1212-efde-1623-785feabcd123'
+LWP_SERVICE_UUID = "00001623-1212-efde-1623-785feabcd123"
+LWP_CHAR_UUID = "00001624-1212-efde-1623-785feabcd123"
 
-BT_DISCOVERY_TIME = 5
 
-class COMMAND_TYPE(StrEnum):
-    SPEED= "speed"
-    SOUND= "sound"
-    LIGHT= "light"
+BT_DISCOVERY_TIME_MS = 5000
+
+COMMAND_TYPE = { 
+    "SPEED" : "speed",
+    "SOUND" : "sound",
+    "LIGHT" : "light"
+}
 
 SOUND = { 
     "BRAKE" : 0x03,
