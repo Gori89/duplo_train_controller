@@ -1,68 +1,31 @@
 import asyncio
 import device_aioble
-import blink
+import constants
+import action
+import time
+
+from button import Button
+from led import Led
 
 async def main():
-    print("STRAT")
-    blink.blink_on()
+    print("Start main")
     device = device_aioble.DeviceBle()
-    await device.connect()
-    print("Ready to send commands")
-    try: 
-
-        await device.prep()
-        print("Prep command")
-        await asyncio.sleep(1)
-        
-        print( "SPEED 100")
-        await device.send_command("SPEED", 100)
-        await asyncio.sleep(4)
-        
-        print( "SPEED -100")
-        await device.send_command("SPEED", -100)
-        await asyncio.sleep(4)
-        
-        print( "SPEED 300")
-        await device.send_command("SPEED", 300)
-        await asyncio.sleep(4)
-        
-        print( "SPEED -300")
-        await device.send_command("SPEED", -300)
-        await asyncio.sleep(4)
-
-        print( "Sound Horn")
-        await device.send_command("SOUND", "HORN")
-        await asyncio.sleep(4)
-
-        print( "Sound BRAKE")
-        await device.send_command("SOUND", "BRAKE")
-        await asyncio.sleep(4)
-
-        print( "Color Pink")
-        await device.send_command("LIGHT", "PINK")
-        await asyncio.sleep(4)
-        
-        print( "Color PURPLE")
-        await device.send_command("LIGHT", "PURPLE")
-        await asyncio.sleep(4)
-        
-        print( "Color RED")
-        await device.send_command("LIGHT", "RED")
-        await asyncio.sleep(4)
-        
-        print( "Color WHITE")
-        await device.send_command("LIGHT", "WHITE")
-        await asyncio.sleep(4)
-        
-        print( "Color OFF")
-        await device.send_command("LIGHT", "OFF")
-        await asyncio.sleep(4)
-
-        blink.blink_off()
-
-        await device.disconnect()
-
-    except Exception as e:
-        print(e)
     
+    connection_led =Led(constants.PIN["CONN_LED"])
+
+    connection_button = Button(constants.PIN["CONN_BUTTON"],action.connection, led=connection_led, device=device)
+    ##test_button = Button(constants.PIN["CONN_BUTTON"],action.test, device=device)
+    ##break_button = Button(constants.PIN["BREAK_BUTTON"], action.brake)
+    ##station_button = Button(constants.PIN["STATION_BUTTON"], action.depart)
+    ##water_button = Button(constants.PIN["WATER_BUTTON"], action.water)
+    ##horn_button = Button(constants.PIN["HORN"], action.horn)
+    ##depart_button = Button(constants.PIN["DEPART_BUTTON"], action.depart)
+    ##light_button = Button(constants.PIN["LIGHT_BUTTON"], action.light_switch)
+
+    while True:
+        print("----------------")
+        start=time.ticks_ms()
+        await connection_button.check_status()
+
+        time.sleep(0.1-min(time.ticks_diff(time.ticks_ms(),start),0.09))
 asyncio.run(main())

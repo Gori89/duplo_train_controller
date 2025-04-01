@@ -5,8 +5,10 @@ from bluetooth import UUID
 
 
 class DeviceBle():
+    is_connected=False
 
     async def connect(self):
+        print("Start_connection")
         async with aioble.scan(duration_ms=const.BT_DISCOVERY_TIME_MS, interval_us=30000, window_us=30000, active=True) as scanner:
             async for result in scanner:
                 if result.name() and const.MODEL_NAME in result.name():
@@ -23,6 +25,8 @@ class DeviceBle():
             except Exception as e:
                 print("Connection failed:", e)
                 self.conn = None
+        else:
+            self.conn = None
                 
         if self.conn:   
             try:
@@ -30,6 +34,7 @@ class DeviceBle():
                 self.service = await self.conn.service(UUID(const.LWP_SERVICE_UUID))
                 self.char = await self.service.characteristic(UUID(const.LWP_CHAR_UUID))
                 print(self.char)
+                self.is_connected=True
             except Exception as e:
                 print("Failed to discover service/char:", e)
         else:
@@ -39,8 +44,8 @@ class DeviceBle():
     async def disconnect(self):
         try:
             if self.conn:
-                print("Disconnecting...")
                 await self.conn.disconnect()
+                self.is_connected=False
                 print("Disconnected!")
         except:
             raise Exception("Warning: Failed to disconnect. Check for hanging connection")
@@ -56,7 +61,7 @@ class DeviceBle():
         elif type.lower()==const.COMMAND_TYPE["LIGHT"]:
                 await self._light(value.upper())
         else:
-                print("Invalid type")
+            print("Invalid action type")
     
     async def prep(self):
         messeage = bytes([0x0A, 0x00, 0x41, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x01])

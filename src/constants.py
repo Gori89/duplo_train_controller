@@ -37,6 +37,17 @@ COLOR = {
     "ORANGE" : 0x08,
     "RED" : 0x09,
     "WHITE" : 0x0A,
+}
+
+PIN = {
+    "CONN_LED": 14,
+    "CONN_BUTTON": 15,
+    "BRAKE_BUTTON" : 2,
+    "STATION_BUTTON" : 3,
+    "WATER_BUTTON" : 4,
+    "HORN_BUTTON" : 5,
+    "DEPART_BUTTON" : 6,
+    "LIGHT_BUTTON" : 7
 
 }
 
