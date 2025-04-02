@@ -53,17 +53,18 @@ class DeviceBle():
 
 
     async def send_command(self, type, value):
-
-        if type.lower()==const.COMMAND_TYPE["SPEED"]:
-                await self._run(int(value))
-        elif type.lower()==const.COMMAND_TYPE["SOUND"]:
-                await self._sound(value.upper())
-        elif type.lower()==const.COMMAND_TYPE["LIGHT"]:
-                await self._light(value.upper())
-        else:
-            print("Invalid action type")
+        if self.is_connected:
+            if type.lower()==const.COMMAND_TYPE["SPEED"]:
+                    await self._run(int(value))
+            elif type.lower()==const.COMMAND_TYPE["SOUND"]:
+                    await self._sound(value.upper())
+            elif type.lower()==const.COMMAND_TYPE["LIGHT"]:
+                    await self._light(value.upper())
+            else:
+                print("Invalid action type")
     
     async def prep(self):
+        print("prep")
         messeage = bytes([0x0A, 0x00, 0x41, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x01])
         await self.char.write(messeage)
 

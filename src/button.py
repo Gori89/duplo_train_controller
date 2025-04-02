@@ -17,12 +17,10 @@ class Button(Pin):
             else:
                 await self.action(self.device)
             self._change_button_status(True)
-        else:
+        elif self.value() == 1:
             self._change_button_status(False)
-        return
 
     def _change_button_status(self, new_status):
         self.was_pressed= new_status
-        ##print("Change status to:",self.was_pressed)
 
 

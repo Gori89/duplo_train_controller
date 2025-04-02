@@ -7,6 +7,7 @@ async def connection(device, conn_led):
         print("Conn")
         print(device)
         await device.connect()
+        await device.prep()
         print(conn_led)
         conn_led.blink_on()
 

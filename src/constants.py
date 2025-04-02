@@ -42,12 +42,13 @@ COLOR = {
 PIN = {
     "CONN_LED": 14,
     "CONN_BUTTON": 15,
-    "BRAKE_BUTTON" : 2,
-    "STATION_BUTTON" : 3,
-    "WATER_BUTTON" : 4,
-    "HORN_BUTTON" : 5,
-    "DEPART_BUTTON" : 6,
-    "LIGHT_BUTTON" : 7
+    "BRAKE_BUTTON" : 9,
+    "STATION_BUTTON" : 8,
+    "WATER_BUTTON" : 7,
+    "HORN_BUTTON" : 6,
+    "DEPART_BUTTON" : 5,
+    "LIGHT_BUTTON" : 10,
+    "ACCELERATOR_POT" : 26
 
 }
 
